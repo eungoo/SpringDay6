@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hr.dao.RegionMapper">
+	<select id="selectMapById" parameterType="int" resultType="map">
+		select region_id, region_name
+		from regions
+		where region_id = #{regionId}
+	</select>
+
+	<select id="selectById" parameterType="int" 
+	                        resultMap="regionBase">
+		select	region_id , region_name
+		from regions
+		where region_id = #{regionId}
+	</select>
+	
+	<insert id="insert" parameterType="region">
+		insert into regions (region_id, region_name)
+		values (#{regionId}, #{regionName})
+	</insert>
+	
+	<update id="update" parameterType="region">
+		update regions set region_name=#{regionName}
+		where region_id = #{regionId}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete regions where region_id=#{regionId}
+	</delete>
+	
+	<resultMap type="region" id="regionBase">
+		<id column="region_id" property="regionId"/>
+		<result column="region_name" property="regionName"/>
+	</resultMap>
+	
+	<!-- regionId = 3번인 지역의 정보와 소속된 모든 국가 정보 -->
+	<select id="selectByIdDetail" parameterType="int" 
+	                              resultMap="regionDetail">
+		select r.*, c.*
+		from regions r 
+			join countries c on r.region_id = c.region_id
+		where r.region_id = #{id} 
+	</select>
+	
+	<resultMap type="region" id="regionDetail" 
+							 extends="regionBase">
+		<collection property="countriesSet" 
+		            ofType="country" 
+		            resultMap="hr.dao.CountriesMapper.countryBase"></collection>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

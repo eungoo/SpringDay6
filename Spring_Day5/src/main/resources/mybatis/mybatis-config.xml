@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>	
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	<!-- DTO에 대한 축약형 등록 -->
+	<typeAliases>
+		<typeAlias type="com.example.region.dto.Region" alias="region" />		
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/regionMapper.xml" />		
+	</mappers>
+
+
+
+
+
+</configuration>
